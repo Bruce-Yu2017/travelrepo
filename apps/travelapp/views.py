@@ -14,25 +14,26 @@ def index(request):
     return render(request,'travelapp/index.html')
 
 def travels(request):
-    if request.method == 'GET':
-        the_user = User.objects.filter(id = request.session['id'])
-        the_user = the_user[0]
-        user_trips = Trip.objects.filter(creator = the_user)
-        user_plans = the_user.plans.all()
-        print user_plans
-        Other_plans = Trip.objects.all()
+    the_user = User.objects.filter(id = request.session['id'])
+    the_user = the_user[0]
+    user_trips = Trip.objects.filter(creator = the_user)
+    user_plans = the_user.plans.all()
+    Other_plans = Trip.objects.all()
 
-        context ={
-            'the_user':the_user,
-            'user_trips':user_trips,
-            'user_plans':user_plans,
-            'Other_plans':Other_plans,
-        }
-        return render(request,'travelapp/travel.html', context)
+    user_plans = list(user_plans)
+    Other_plans = list(Other_plans)
+    Other_plans = [x for x in Other_plans if x not in user_plans]
+    Other_plans = [x for x in Other_plans if x not  in user_trips]
+    print Other_plans
+    context ={
+        'the_user':the_user,
+        'user_trips':user_trips,
+        'user_plans':user_plans,
+        'Other_plans':Other_plans,
+    }
+    return render(request,'travelapp/travel.html', context)
+    
 
-    if request.method == 'POST':
-
-        return redirect('/travels')
 
 
 def register(request):
@@ -74,8 +75,8 @@ def add_travels(request):
             messages.error(request,error, extra_tags=tag )
         return redirect('/travels/add')
     else:
-        date_from = datetime.strptime(request.POST['date_from'], '%m/%d/%Y')
-        date_to = datetime.strptime(request.POST['date_to'], '%m/%d/%Y')
+        date_from = datetime.strptime(request.POST['date_from'], '%Y-%m-%d')
+        date_to = datetime.strptime(request.POST['date_to'], '%Y-%m-%d')
         new_trip = Trip.objects.create(destination = request.POST['destination'],desc = request.POST['desc'], \
         creator = User.objects.get(id = request.session['id']), date_from = date_from, \
         date_to = date_to)

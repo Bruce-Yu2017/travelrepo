@@ -4,7 +4,7 @@
         <title>Travels</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -29,8 +29,8 @@
         {% for trip in user_trips %}
         <tr>
         <td><a href="/travels/destination/{{trip.id}}">{{trip.destination}}</a></td>
-        <td>{{trip.date_from}}</td>
-        <td>{{trip.date_to}}</td>
+        <td>{{trip.date_from |date:'M d, Y'}}</td>
+        <td>{{trip.date_to |date:'M d, Y'}}</td>
         <td>{{trip.desc}}</td>
         </tr>
         {% endfor %}
@@ -39,8 +39,8 @@
         {% for plan in user_plans %}
         <tr>
         <td><a href="/travels/destination/{{plan.id}}">{{plan.destination}}</a></td>
-        <td>{{plan.date_from}}</td>
-        <td>{{plan.date_to}}</td>
+        <td>{{plan.date_from |date:'M d, Y'}}</td>
+        <td>{{plan.date_to |date:'M d, Y'}}</td>
         <td>{{plan.desc}}</td>
         </tr>
         {% endfor %}
@@ -64,8 +64,8 @@
             <tr>
             <td>{{plan.creator.name}}</td>
             <td><a href="/travels/destination/{{plan.id}}">{{plan.destination}}</a></td>
-            <td>{{plan.date_from}}</td>
-            <td>{{plan.date_to}}</td>
+            <td>{{plan.date_from |date:'M d, Y' }}</td>
+            <td>{{plan.date_to |date:'M d, Y' }}</td>
             <td><a href="/travels/join/{{plan.id}}">Join</a></td>                      
     
             </tr>

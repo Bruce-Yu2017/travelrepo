@@ -10,7 +10,7 @@ class UserManager(models.Manager):
 
     def basic_validator(self, postData):
         errors = {}
-        name_regex = re.compile(r'^[A-Z][a-z][a-z\\s]+$')
+        name_regex = re.compile(r'^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$')
         pw_regex = re.compile(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')
         username_regex = re.compile(r'^[A-Za-z]{3,}$')
 
@@ -91,23 +91,17 @@ class UserManager(models.Manager):
         if len(postData['date_from']) < 1 :
             errors['date_from'] = "Starting date filed can not be empty!"
         else:
-            if not date_regex.match(postData['date_from']):
-                errors['date_from'] = "Incorrect date format!"
-            else:
-                date_object = datetime.strptime(postData['date_from'], '%m/%d/%Y')
-                if date_object < datetime.now():
-                    errors['date_from'] = "Starting date should be future date!!"
+            date_object = datetime.strptime(postData['date_from'], '%Y-%m-%d')
+            if date_object < datetime.now():
+                errors['date_from'] = "Starting date should be future date!!"
 
         if len(postData['date_to']) < 1 :
             errors['date_to'] = "Ending date filed can not be empty!"
-        else:
-            if not date_regex.match(postData['date_to']):
-                errors['date_to'] = "Incorrect date format!"
-            else:
-                date_object1 = datetime.strptime(postData['date_from'], '%m/%d/%Y')
-                date_object2 = datetime.strptime(postData['date_to'], '%m/%d/%Y')
-                if date_object1 > date_object2:
-                    errors['date_to'] = "Starting date should be before Ending date!!"
+        else:           
+            date_object1 = datetime.strptime(postData['date_from'], '%Y-%m-%d')
+            date_object2 = datetime.strptime(postData['date_to'], '%Y-%m-%d')
+            if date_object1 > date_object2:
+                errors['date_to'] = "Starting date should be before Ending date!!"
         
         return errors
 
