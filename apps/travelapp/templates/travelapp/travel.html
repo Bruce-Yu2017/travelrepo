@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Travels</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    </head>
+    <body>
+            <button type="button" class="btn btn-default navbar-btn"><a href="/logout">Logout</a></button>
+            <hr>
+    <h1>Hello, {{the_user.name}}</h1>
+    <h5>Your Trip Schedules</h5>
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Destination</th>
+        <th>Travel Start Date</th>
+        <th>Travel End Date</th>
+        <th>Plan</th>                
+        </tr>
+    </thead>
+    <tbody>
+        {% if user_trips %}
+        {% for trip in user_trips %}
+        <tr>
+        <td><a href="/travels/destination/{{trip.id}}">{{trip.destination}}</a></td>
+        <td>{{trip.date_from}}</td>
+        <td>{{trip.date_to}}</td>
+        <td>{{trip.desc}}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        {% if user_plans %}
+        {% for plan in user_plans %}
+        <tr>
+        <td><a href="/travels/destination/{{plan.id}}">{{plan.destination}}</a></td>
+        <td>{{plan.date_from}}</td>
+        <td>{{plan.date_to}}</td>
+        <td>{{plan.desc}}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        
+    </tbody>
+    </table><br><br>
+<table class="table">
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th> Destination</th>
+            <th>Travel Start Date</th>
+            <th>Travel End Date</th>
+            <th>Do You Want To Join?</th>                
+            </tr>
+        </thead>
+        <tbody>
+            {% if Other_plans %}
+            {% for plan in Other_plans %}
+            <tr>
+            <td>{{plan.creator.name}}</td>
+            <td><a href="/travels/destination/{{plan.id}}">{{plan.destination}}</a></td>
+            <td>{{plan.date_from}}</td>
+            <td>{{plan.date_to}}</td>
+            <td><a href="/travels/join/{{plan.id}}">Join</a></td>                      
+    
+            </tr>
+            {% endfor %}
+            {% endif %}
+            
+        </tbody>
+        </table>
+        
+        <br>
+        <button type="button" class="btn btn-default navbar-btn"><a href="/travels/add">Add Travel Plan</a></button>
+    
+    </body>
+</html>

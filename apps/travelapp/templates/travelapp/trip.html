@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Destination</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <button type="button" class="btn btn-default navbar-btn"><a href="/travels">Home</a></button>
+        <button type="button" class="btn btn-default navbar-btn"><a href="/logout">Logout</a></button>
+        <hr>
+        <h1>{{the_trip.destination}}</h1>
+        <h4>Planed By: {{the_trip.creator}}</h4>
+        <h4>Description: {{the_trip.desc}}</h4>
+        <h4>Travel Date From: {{the_trip.date_from}}</h4>
+        <h4>Travel Date To: {{the_trip.date_to}}</h4>
+        <br>
+        <br>
+          
+        <h1>Other user's joining the trip:</h1>
+        {% for follower in followers %}
+        <h4>{{follower.name}}</h4>
+        {% endfor %}
+    </body>
+</html>
